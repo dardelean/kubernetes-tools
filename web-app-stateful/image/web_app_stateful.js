@@ -6,8 +6,16 @@ const PORT = 80;
 const HOST = '0.0.0.0';
 const data_file = "/var/data/data.txt";
 
-
 console.log("Web server starting...");
+
+function fileExists(file) {
+  try {
+    fs.statSync(file);
+    return true;
+  } catch (e) {
+    return false;
+  }
+}
 
 var handler = function(request, response) {
 	if (request.method == 'POST') {

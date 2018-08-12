@@ -1,0 +1,36 @@
+apiVersion: apps/v1beta1
+kind: StatefulSet
+metadata:
+  name: {{ template "web-app-stateful.fullname" . }}
+  labels:
+    app: {{ template "web-app-stateful.name" . }}
+    chart: {{ template "web-app-stateful.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  serviceName: {{ template "web-app-stateful.name" . }}
+  replicas: {{ .Values.replicaCount }}
+  template:
+    metadata:
+      labels:
+        app: {{ template "web-app-stateful.name" . }}
+        release: {{ .Release.Name }}
+    spec:
+      containers:
+      - name: {{ .Chart.Name }}
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        ports:
+        - name: http
+          containerPort: 80
+        volumeMounts:
+        - name: data
+          mountPath: /var/data
+  volumeClaimTemplates:
+  - metadata:
+      name: data
+    spec:
+      resources:
+        requests:
+          storage: 2Mi
+      accessModes:
+      - ReadWriteOnce

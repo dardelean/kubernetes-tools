@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ template "web-app-stateful.fullname" . }}
+  labels:
+    app: {{ template "web-app-stateful.name" . }}
+    chart: {{ template "web-app-stateful.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  type: ClusterIP
+  clusterIP: None
+  ports:
+    - name: http
+      port: {{ .Values.service.port }}
+  selector:
+    app: {{ template "web-app-stateful.name" . }}
+    release: {{ .Release.Name }}
