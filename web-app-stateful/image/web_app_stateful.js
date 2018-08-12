@@ -4,7 +4,7 @@ const fs = require('fs');
 
 const PORT = 80;
 const HOST = '0.0.0.0';
-const data_file = "/var/data/kubia.txt";
+const data_file = "/var/data/data.txt";
 
 
 console.log("Web server starting...");
